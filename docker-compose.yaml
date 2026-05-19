@@ -75,11 +75,12 @@ x-airflow-common:
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-apache-airflow-providers-mongo}
     # The following line can be used to set a custom config file, stored in the local config folder
     AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
-    # Автоматическое создание подключения file_AA:
-    AIRFLOW_CONN_FILE_AA: 'file:///?path=%2Fopt%2Fairflow%2Fshare%2F'
 
-    # Автоматическое создание подключения mongo_AA:
-    AIRFLOW_CONN_MONGO_AA: 'mongodb://admin:password@mongodb:27017/admin?authSource=admin'
+    # connection to file_AA:
+    AIRFLOW_CONN_FILE_AA: 'file:///?path=%2Fopt%2Fairflow%2Fshare%2F'
+    # Аconnection to mongo_AA:
+    AIRFLOW_CONN_MONGO_AA: 'mongo://admin:password@mongodb:27017/admin?authSource=admin'
+
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}/logs:/opt/airflow/logs
