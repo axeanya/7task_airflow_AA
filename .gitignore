@@ -1,0 +1,10 @@
+/config
+/dags/*
+/logs
+/plugins
+/share
+.env
+
+!/dags/dag1_process_AA.py
+!/dags/dag2_mongo_load.py
+!/dags/shared_assets.py

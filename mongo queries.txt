@@ -1,0 +1,89 @@
+-----------------------------------------
+TASK: Top 5 frequently occurring comments
+RESULT:
+[
+  {
+    $group:
+      /**
+       * _id: The id of the group.
+       * fieldN: The first field name.
+       */
+      {
+        _id: "$content",
+        count: {
+          $sum: 1
+        }
+      }
+  },
+  {
+    $sort:
+      /**
+       * Provide any number of field/order pairs.
+       */
+      {
+        count: -1
+      }
+  },
+  {
+    $limit:
+      /**
+       * Provide the number of documents to limit.
+       */
+      5
+  }
+]
+
+--------------------------------------------------------------------------
+TASK: All entries where the “content” field is less than 5 characters long
+RESULT: 
+{ $expr: { $lt: [{ $strLenCP: "$content" }, 5] } }
+
+--------------------------------------------------------------------------
+TASK: Average rating for each day (the result should be in timestamp type).
+RESULT:
+
+[
+  {
+    $group:
+      /**
+       * _id: The id of the group.
+       * fieldN: The first field name.
+       */
+      {
+        _id: {
+          $dateTrunc: {
+            date: {
+              $dateFromString: {
+                dateString: "$at"
+              }
+            },
+            unit: "day"
+          }
+        },
+        averageRating: {
+          $avg: "$score"
+        }
+      }
+  },
+  {
+    $project:
+      /**
+       * specifications: The fields to
+       *   include or exclude.
+       */
+      {
+        _id: 0,
+        day: "$_id",
+        averageRating: 1
+      }
+  },
+  {
+    $sort:
+      /**
+       * Provide any number of field/order pairs.
+       */
+      {
+        day: 1
+      }
+  }
+]
